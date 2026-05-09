@@ -1,586 +1,333 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ahmed Hamed | AI Engineer</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Ahmed Hamed | AI Engineer & Data Scientist</title>
+  <!-- Tailwind CSS v3 + basic interactivity -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Custom overrides for arbitrary radii & complex gradients -->
   <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      scroll-behavior:smooth;
+    /* custom border radii to replace arbitrary values like rounded-[40px] */
+    .rounded-40 {
+      border-radius: 40px;
     }
-
-    body{
-      font-family:'Inter',sans-serif;
-      background:#050816;
-      color:white;
-      overflow-x:hidden;
+    .rounded-30 {
+      border-radius: 30px;
     }
-
-    a{
-      text-decoration:none;
-      color:inherit;
+    /* custom radial gradient background for glow effect */
+    .bg-radial-glow {
+      background-image: radial-gradient(circle at top right, rgba(99, 102, 241, 0.15), transparent 30%),
+                        radial-gradient(circle at bottom left, rgba(14, 165, 233, 0.12), transparent 30%);
     }
-
-    .container{
-      width:90%;
-      max-width:1300px;
-      margin:auto;
+    /* smooth scroll behavior + offset for sticky navbar */
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px;
     }
-
-    nav{
-      position:fixed;
-      top:0;
-      width:100%;
-      z-index:1000;
-      backdrop-filter:blur(12px);
-      background:rgba(5,8,22,.75);
-      border-bottom:1px solid rgba(255,255,255,.08);
+    /* custom glassmorphism tweak for better readability */
+    .glass-card {
+      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
-
-    .nav-content{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:20px 0;
+    body {
+      background-color: black;
+      font-family: system-ui, 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
-
-    .logo{
-      font-size:28px;
-      font-weight:800;
+    /* additional hover transition for skill badges */
+    .skill-badge {
+      transition: all 0.2s ease;
     }
-
-    .logo span{
-      color:#38bdf8;
+    .skill-badge:hover {
+      border-color: rgba(34, 211, 238, 0.6);
+      color: #67e8f9;
     }
-
-    .nav-links{
-      display:flex;
-      gap:35px;
+    /* custom button/icon consistency */
+    .no-underline-link {
+      text-decoration: none;
     }
-
-    .nav-links a{
-      color:#b4b4b4;
-      transition:.3s;
-    }
-
-    .nav-links a:hover{
-      color:#38bdf8;
-    }
-
-    .hero{
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .hero::before{
-      content:'';
-      position:absolute;
-      width:700px;
-      height:700px;
-      background:radial-gradient(circle,#2563eb33,transparent 70%);
-      top:-250px;
-      right:-200px;
-    }
-
-    .hero-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:60px;
-      align-items:center;
-    }
-
-    .badge{
-      display:inline-block;
-      padding:10px 18px;
-      background:rgba(56,189,248,.1);
-      border:1px solid rgba(56,189,248,.25);
-      border-radius:999px;
-      color:#38bdf8;
-      margin-bottom:30px;
-      font-size:14px;
-    }
-
-    .hero h1{
-      font-size:72px;
-      line-height:1.1;
-      font-weight:900;
-      margin-bottom:25px;
-    }
-
-    .gradient{
-      background:linear-gradient(to right,#38bdf8,#2563eb);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-    }
-
-    .hero p{
-      color:#9ca3af;
-      line-height:1.8;
-      font-size:18px;
-      margin-bottom:40px;
-    }
-
-    .buttons{
-      display:flex;
-      gap:20px;
-      flex-wrap:wrap;
-    }
-
-    .btn{
-      padding:16px 28px;
-      border-radius:16px;
-      border:none;
-      cursor:pointer;
-      font-weight:600;
-      transition:.3s;
-    }
-
-    .primary{
-      background:linear-gradient(to right,#06b6d4,#2563eb);
-      color:white;
-      box-shadow:0 10px 30px rgba(37,99,235,.35);
-    }
-
-    .primary:hover{
-      transform:translateY(-4px);
-    }
-
-    .secondary{
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.08);
-      color:white;
-    }
-
-    .card-box{
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.08);
-      backdrop-filter:blur(20px);
-      border-radius:35px;
-      padding:35px;
-    }
-
-    .stats{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:20px;
-    }
-
-    .stat-card{
-      background:#0f172a;
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:25px;
-      padding:25px;
-    }
-
-    .stat-card h2{
-      font-size:42px;
-      color:#38bdf8;
-      margin-bottom:10px;
-    }
-
-    .projects{
-      padding:120px 0;
-    }
-
-    .section-title{
-      margin-bottom:70px;
-    }
-
-    .section-title p{
-      color:#38bdf8;
-      margin-bottom:15px;
-      font-weight:600;
-    }
-
-    .section-title h2{
-      font-size:54px;
-      font-weight:900;
-    }
-
-    .project-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-      gap:30px;
-    }
-
-    .project-card{
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:28px;
-      overflow:hidden;
-      transition:.4s;
-      position:relative;
-    }
-
-    .project-card:hover{
-      transform:translateY(-10px);
-      border-color:#38bdf8;
-    }
-
-    .top-line{
-      height:5px;
-      background:linear-gradient(to right,#38bdf8,#2563eb);
-    }
-
-    .project-content{
-      padding:28px;
-    }
-
-    .project-category{
-      color:#38bdf8;
-      font-size:13px;
-      letter-spacing:1px;
-      margin-bottom:14px;
-    }
-
-    .project-card h3{
-      font-size:28px;
-      margin-bottom:18px;
-    }
-
-    .project-card p{
-      color:#9ca3af;
-      line-height:1.7;
-      margin-bottom:25px;
-    }
-
-    .tags{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-bottom:30px;
-    }
-
-    .tag{
-      padding:8px 14px;
-      background:#111827;
-      border-radius:999px;
-      font-size:13px;
-      color:#d1d5db;
-      border:1px solid rgba(255,255,255,.08);
-    }
-
-    .project-buttons{
-      display:flex;
-      gap:15px;
-    }
-
-    .project-buttons a{
-      flex:1;
-      text-align:center;
-      padding:13px;
-      border-radius:14px;
-      transition:.3s;
-      border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.05);
-    }
-
-    .project-buttons a:hover{
-      background:#38bdf8;
-      color:black;
-      font-weight:600;
-    }
-
-    .skills{
-      padding:120px 0;
-    }
-
-    .skills-box{
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:40px;
-      padding:60px;
-    }
-
-    .skills-list{
-      display:flex;
-      flex-wrap:wrap;
-      gap:18px;
-      margin-top:40px;
-    }
-
-    .skill{
-      padding:14px 22px;
-      background:#0f172a;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.08);
-      transition:.3s;
-    }
-
-    .skill:hover{
-      border-color:#38bdf8;
-      color:#38bdf8;
-      transform:translateY(-3px);
-    }
-
-    footer{
-      padding:40px 0;
-      border-top:1px solid rgba(255,255,255,.08);
-      text-align:center;
-      color:#9ca3af;
-    }
-
-    @media(max-width:992px){
-      .hero-grid{
-        grid-template-columns:1fr;
-      }
-
-      .hero h1{
-        font-size:54px;
-      }
-
-      .nav-links{
-        display:none;
-      }
-    }
-
-    @media(max-width:600px){
-      .hero h1{
-        font-size:42px;
-      }
-
-      .section-title h2{
-        font-size:38px;
-      }
-
-      .skills-box{
-        padding:35px;
-      }
-    }
-
   </style>
 </head>
+<body class="bg-black text-white antialiased overflow-x-hidden">
 
-<body>
+  <!-- global background gradient overlay (same as original) -->
+  <div class="fixed inset-0 bg-radial-glow pointer-events-none z-0"></div>
 
-  <nav>
-    <div class="container nav-content">
-      <div class="logo">
-        Ahmed <span>Hamed</span>
-      </div>
-
-      <div class="nav-links">
-        <a href="#projects">Projects</a>
-        <a href="#skills">Skills</a>
-        <a href="#contact">Contact</a>
+  <!-- Sticky Navbar (glass) -->
+  <nav class="sticky top-0 z-50 backdrop-blur-xl bg-black/30 border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <h1 class="text-2xl font-bold tracking-wide">
+        Ahmed <span class="text-cyan-400">Hamed</span>
+      </h1>
+      <div class="hidden md:flex gap-8 text-sm text-zinc-300">
+        <a href="#about" class="hover:text-cyan-400 transition duration-200">About</a>
+        <a href="#projects" class="hover:text-cyan-400 transition duration-200">Projects</a>
+        <a href="#skills" class="hover:text-cyan-400 transition duration-200">Skills</a>
+        <a href="#contact" class="hover:text-cyan-400 transition duration-200">Contact</a>
       </div>
     </div>
   </nav>
 
-  <section class="hero">
-    <div class="container hero-grid">
-
-      <div>
-        <div class="badge">
-          AI Engineer • Data Scientist • Business Analyst
+  <main class="relative z-10">
+    <!-- Hero + About section (id="about") -->
+    <section id="about" class="relative max-w-7xl mx-auto px-6 pt-24 pb-28">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <!-- left column: intro text -->
+        <div>
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-300 text-sm mb-8">
+            AI Engineer • Data Scientist • Business Analyst
+          </div>
+          <h1 class="text-5xl md:text-7xl font-black leading-tight mb-6">
+            Building <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">AI Solutions</span> & Data Products
+          </h1>
+          <p class="text-zinc-400 text-lg leading-relaxed max-w-xl mb-10">
+            Specialized in Machine Learning, Deep Learning, Computer Vision, NLP, and Business Intelligence with hands-on experience building scalable AI systems and analytical dashboards.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <button onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})" class="px-7 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 font-semibold hover:scale-105 transition duration-300 shadow-2xl shadow-cyan-500/20 cursor-pointer">
+              View Projects
+            </button>
+            <button onclick="alert('📄 Portfolio CV – contact for detailed resume')" class="px-7 py-4 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition duration-200 cursor-pointer">
+              Download CV
+            </button>
+          </div>
         </div>
 
-        <h1>
-          Building <span class="gradient">AI Solutions</span> & Smart Data Products
-        </h1>
+        <!-- right column: stats + experience card -->
+        <div class="relative">
+          <div class="absolute -inset-6 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-40 blur-3xl opacity-20"></div>
+          <div class="relative rounded-40 border border-white/10 bg-white/5 backdrop-blur-xl p-8 shadow-2xl">
+            <div class="grid grid-cols-2 gap-6">
+              <div class="rounded-3xl bg-black/40 border border-white/10 p-6 text-center md:text-left">
+                <h3 class="text-4xl font-black text-cyan-400">15+</h3>
+                <p class="text-zinc-400 mt-2">AI & Data Projects</p>
+              </div>
+              <div class="rounded-3xl bg-black/40 border border-white/10 p-6 text-center md:text-left">
+                <h3 class="text-4xl font-black text-blue-400">97%</h3>
+                <p class="text-zinc-400 mt-2">Model Accuracy</p>
+              </div>
+              <div class="rounded-3xl bg-black/40 border border-white/10 p-6 col-span-2">
+                <h3 class="text-2xl font-bold mb-4">Experience & Education</h3>
+                <div class="space-y-4 text-zinc-300">
+                  <div>
+                    <p class="font-semibold">ML Intern — GTC</p>
+                    <p class="text-sm text-zinc-500">Remote Internship</p>
+                  </div>
+                  <div>
+                    <p class="font-semibold">AI Intern — UneeQ Interns</p>
+                    <p class="text-sm text-zinc-500">Remote Internship</p>
+                  </div>
+                  <div>
+                    <p class="font-semibold">Data Science & AI Diploma — AMIT</p>
+                    <p class="text-sm text-zinc-500">Student</p>
+                  </div>
+                  <div>
+                    <p class="font-semibold">AI Advanced Diploma — INSTANT</p>
+                    <p class="text-sm text-zinc-500">Student</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <p>
-          Specialized in Machine Learning, Deep Learning, Computer Vision, NLP, and Business Intelligence with practical experience building real-world AI systems and analytical dashboards.
+    <!-- Projects Section -->
+    <section id="projects" class="relative max-w-7xl mx-auto px-6 py-24">
+      <div class="flex items-end justify-between mb-14 flex-wrap gap-6">
+        <div>
+          <p class="text-cyan-400 font-semibold mb-3 tracking-wide">PORTFOLIO</p>
+          <h2 class="text-4xl md:text-5xl font-black">Featured Projects</h2>
+        </div>
+        <p class="text-zinc-400 max-w-lg">
+          Selected projects across Artificial Intelligence, Machine Learning, Data Analysis, Computer Vision, and Business Intelligence.
         </p>
-
-        <div class="buttons">
-          <a href="#projects" class="btn primary">View Projects</a>
-          <a href="#" class="btn secondary">Download CV</a>
-        </div>
       </div>
 
-      <div class="card-box">
-        <div class="stats">
-
-          <div class="stat-card">
-            <h2>15+</h2>
-            <span>Projects</span>
+      <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
+        <!-- Project 1: Smart PPE Detection -->
+        <div class="group relative rounded-30 overflow-hidden border border-white/10 bg-white/5 backdrop-blur-xl hover:-translate-y-2 transition duration-500">
+          <div class="h-2 bg-gradient-to-r from-orange-500 to-red-500"></div>
+          <div class="p-7">
+            <p class="text-sm text-cyan-300 mb-3 tracking-wide uppercase">Computer Vision · YOLOv8</p>
+            <h3 class="text-2xl font-bold mb-4 group-hover:text-cyan-400 transition">Smart PPE Detection System</h3>
+            <p class="text-zinc-400 leading-relaxed mb-6">Real-time safety equipment detection system using YOLOv8 to identify helmets, gloves, boots, goggles, and safety vests for workplace monitoring.</p>
+            <div class="flex flex-wrap gap-2 mb-8">
+              <span class="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-zinc-300">Python</span>
+              <span class="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-zinc-300">YOLOv8</span>
+              <span class="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-zinc-300">OpenCV</span>
+              <span class="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-zinc-300">PyTorch</span>
+            </div>
+            <div class="flex gap-3">
+              <button onclick="alert('Live demo preview: Smart PPE detection system')" class="flex-1 py-3 rounded-xl bg-white/10 hover:bg-white/15 transition">Live Demo</button>
+              <button onclick="window.open('https://github.com/', '_blank')" class="flex-1 py-3 rounded-xl border border-white/10 hover:bg-white/5 transition">GitHub</button>
+            </div>
           </div>
+        </div>
 
-          <div class="stat-card">
-            <h2>97%</h2>
-            <span>Model Accuracy</span>
+        <!-- Project 2: Amazon UK Products Analysis -->
+        <div class="group relative rounded-30 overflow-hidden border border-white/10 bg-white/5 backdrop-blur-xl hover:-translate-y-2 transition duration-500">
+          <div class="h-2 bg-gradient-to-r from-cyan-500 to-blue-500"></div>
+          <div class="p-7">
+            <p class="text-sm text-cyan-300 mb-3 tracking-wide uppercase">Business Intelligence · EDA</p>
+            <h3 class="text-2xl font-bold mb-4 group-hover:text-cyan-400 transition">Amazon UK Products Analysis</h3>
+            <p class="text-zinc-400 leading-relaxed mb-6">Exploratory Data Analysis on 2.2M Amazon UK products dataset to uncover pricing strategies, SEO optimization opportunities, and top-selling patterns.</p>
+            <div class="flex flex-wrap gap-2 mb-8">
+              <span class="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-zinc-300">Python</span>
+              <span class="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-zinc-300">Pandas</span>
+              <span class="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-zinc-300">Power BI</span>
+              <span class="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-zinc-300">SQL</span>
+            </div>
+            <div class="flex gap-3">
+              <button onclick="alert('Interactive dashboard preview available')" class="flex-1 py-3 rounded-xl bg-white/10 hover:bg-white/15 transition">Live Demo</button>
+              <button onclick="window.open('https://github.com/', '_blank')" class="flex-1 py-3 rounded-xl border border-white/10 hover:bg-white/5 transition">GitHub</button>
+            </div>
           </div>
+        </div>
 
-          <div class="stat-card" style="grid-column: span 2;">
-            <h3 style="margin-bottom:20px;font-size:24px;">Experience</h3>
-
-            <p style="margin-bottom:15px;">
-              <strong>ML Intern — GTC</strong><br>
-              <span style="color:#9ca3af;">Remote Internship</span>
-            </p>
-
-            <p style="margin-bottom:15px;">
-              <strong>AI Intern — UneeQ Interns</strong><br>
-              <span style="color:#9ca3af;">Remote Internship</span>
-            </p>
-
-            <p style="margin-bottom:15px;">
-              <strong>AMIT</strong><br>
-              <span style="color:#9ca3af;">Data Science & AI Diploma</span>
-            </p>
-
-            <p>
-              <strong>INSTANT</strong><br>
-              <span style="color:#9ca3af;">AI Advanced Diploma</span>
-            </p>
-
+        <!-- Project 3: Fruit & Vegetable Classification -->
+        <div class="group relative rounded-30 overflow-hidden border border-white/10 bg-white/5 backdrop-blur-xl hover:-translate-y-2 transition duration-500">
+          <div class="h-2 bg-gradient-to-r from-green-500 to-emerald-500"></div>
+          <div class="p-7">
+            <p class="text-sm text-cyan-300 mb-3 tracking-wide uppercase">Deep Learning</p>
+            <h3 class="text-2xl font-bold mb-4 group-hover:text-cyan-400 transition">Fruit & Vegetable Classification</h3>
+            <p class="text-zinc-400 leading-relaxed mb-6">Image classification model using EfficientNet with 97% accuracy deployed through Streamlit for real-time predictions.</p>
+            <div class="flex flex-wrap gap-2 mb-8">
+              <span class="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-zinc-300">PyTorch</span>
+              <span class="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-zinc-300">EfficientNet</span>
+              <span class="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-zinc-300">Streamlit</span>
+              <span class="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-zinc-300">CNN</span>
+            </div>
+            <div class="flex gap-3">
+              <button onclick="alert('Streamlit app demo – real time classification')" class="flex-1 py-3 rounded-xl bg-white/10 hover:bg-white/15 transition">Live Demo</button>
+              <button onclick="window.open('https://github.com/', '_blank')" class="flex-1 py-3 rounded-xl border border-white/10 hover:bg-white/5 transition">GitHub</button>
+            </div>
           </div>
+        </div>
 
+        <!-- Project 4: Customer Churn Prediction -->
+        <div class="group relative rounded-30 overflow-hidden border border-white/10 bg-white/5 backdrop-blur-xl hover:-translate-y-2 transition duration-500">
+          <div class="h-2 bg-gradient-to-r from-purple-500 to-pink-500"></div>
+          <div class="p-7">
+            <p class="text-sm text-cyan-300 mb-3 tracking-wide uppercase">Machine Learning</p>
+            <h3 class="text-2xl font-bold mb-4 group-hover:text-cyan-400 transition">Customer Churn Prediction</h3>
+            <p class="text-zinc-400 leading-relaxed mb-6">Predictive analytics solution for customer churn analysis using behavioral data, retention insights, and classification models.</p>
+            <div class="flex flex-wrap gap-2 mb-8">
+              <span class="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-zinc-300">Scikit-learn</span>
+              <span class="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-zinc-300">XGBoost</span>
+              <span class="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-zinc-300">Pandas</span>
+              <span class="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-zinc-300">ML</span>
+            </div>
+            <div class="flex gap-3">
+              <button onclick="alert('Churn prediction model – interactive metrics')" class="flex-1 py-3 rounded-xl bg-white/10 hover:bg-white/15 transition">Live Demo</button>
+              <button onclick="window.open('https://github.com/', '_blank')" class="flex-1 py-3 rounded-xl border border-white/10 hover:bg-white/5 transition">GitHub</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 5: Supply Chain Optimization Tool -->
+        <div class="group relative rounded-30 overflow-hidden border border-white/10 bg-white/5 backdrop-blur-xl hover:-translate-y-2 transition duration-500">
+          <div class="h-2 bg-gradient-to-r from-yellow-500 to-orange-500"></div>
+          <div class="p-7">
+            <p class="text-sm text-cyan-300 mb-3 tracking-wide uppercase">AI Optimization</p>
+            <h3 class="text-2xl font-bold mb-4 group-hover:text-cyan-400 transition">Supply Chain Optimization Tool</h3>
+            <p class="text-zinc-400 leading-relaxed mb-6">AI-driven allotment and planning tool designed to optimize supply chain operations using constraints and Excel-based workflows.</p>
+            <div class="flex flex-wrap gap-2 mb-8">
+              <span class="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-zinc-300">Python</span>
+              <span class="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-zinc-300">Optimization</span>
+              <span class="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-zinc-300">Excel</span>
+              <span class="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-zinc-300">AI</span>
+            </div>
+            <div class="flex gap-3">
+              <button onclick="alert('Supply chain optimization solver demo')" class="flex-1 py-3 rounded-xl bg-white/10 hover:bg-white/15 transition">Live Demo</button>
+              <button onclick="window.open('https://github.com/', '_blank')" class="flex-1 py-3 rounded-xl border border-white/10 hover:bg-white/5 transition">GitHub</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 6: Power BI Sales Dashboard -->
+        <div class="group relative rounded-30 overflow-hidden border border-white/10 bg-white/5 backdrop-blur-xl hover:-translate-y-2 transition duration-500">
+          <div class="h-2 bg-gradient-to-r from-indigo-500 to-violet-500"></div>
+          <div class="p-7">
+            <p class="text-sm text-cyan-300 mb-3 tracking-wide uppercase">Data Analytics</p>
+            <h3 class="text-2xl font-bold mb-4 group-hover:text-cyan-400 transition">Power BI Sales Dashboard</h3>
+            <p class="text-zinc-400 leading-relaxed mb-6">Interactive sales and profit dashboard analyzing trends from 2014–2017 with business recommendations for strategic improvements.</p>
+            <div class="flex flex-wrap gap-2 mb-8">
+              <span class="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-zinc-300">Power BI</span>
+              <span class="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-zinc-300">DAX</span>
+              <span class="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-zinc-300">Excel</span>
+              <span class="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-zinc-300">Visualization</span>
+            </div>
+            <div class="flex gap-3">
+              <button onclick="alert('Power BI interactive dashboard preview')" class="flex-1 py-3 rounded-xl bg-white/10 hover:bg-white/15 transition">Live Demo</button>
+              <button onclick="window.open('https://github.com/', '_blank')" class="flex-1 py-3 rounded-xl border border-white/10 hover:bg-white/5 transition">GitHub</button>
+            </div>
+          </div>
         </div>
       </div>
+    </section>
 
-    </div>
-  </section>
-
-  <section class="projects" id="projects">
-    <div class="container">
-
-      <div class="section-title">
-        <p>PORTFOLIO</p>
-        <h2>Featured Projects</h2>
-      </div>
-
-      <div class="project-grid">
-
-        <div class="project-card">
-          <div class="top-line"></div>
-
-          <div class="project-content">
-            <div class="project-category">
-              COMPUTER VISION • YOLOv8
-            </div>
-
-            <h3>Smart PPE Detection</h3>
-
-            <p>
-              Real-time PPE detection system using YOLOv8 for monitoring helmets, gloves, boots, goggles, and safety vests.
+    <!-- Skills Section -->
+    <section id="skills" class="relative max-w-7xl mx-auto px-6 py-24">
+      <div class="rounded-40 border border-white/10 bg-white/5 backdrop-blur-xl p-10 md:p-16">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <p class="text-cyan-400 font-semibold mb-3">EXPERTISE</p>
+            <h2 class="text-4xl md:text-5xl font-black mb-6">Technical Skills</h2>
+            <p class="text-zinc-400 text-lg leading-relaxed">
+              Experience building end-to-end AI pipelines, analytical dashboards, predictive systems, and modern machine learning applications.
             </p>
-
-            <div class="tags">
-              <div class="tag">YOLOv8</div>
-              <div class="tag">OpenCV</div>
-              <div class="tag">PyTorch</div>
-              <div class="tag">Python</div>
-            </div>
-
-            <div class="project-buttons">
-              <a href="#">Live Demo</a>
-              <a href="#">GitHub</a>
-            </div>
-
+          </div>
+          <div class="flex flex-wrap gap-4">
+            <span class="skill-badge px-5 py-3 rounded-2xl bg-black/30 border border-white/10 hover:border-cyan-400/50 hover:text-cyan-300 transition">Python</span>
+            <span class="skill-badge px-5 py-3 rounded-2xl bg-black/30 border border-white/10 hover:border-cyan-400/50 hover:text-cyan-300 transition">Machine Learning</span>
+            <span class="skill-badge px-5 py-3 rounded-2xl bg-black/30 border border-white/10 hover:border-cyan-400/50 hover:text-cyan-300 transition">Deep Learning</span>
+            <span class="skill-badge px-5 py-3 rounded-2xl bg-black/30 border border-white/10 hover:border-cyan-400/50 hover:text-cyan-300 transition">Computer Vision</span>
+            <span class="skill-badge px-5 py-3 rounded-2xl bg-black/30 border border-white/10 hover:border-cyan-400/50 hover:text-cyan-300 transition">NLP</span>
+            <span class="skill-badge px-5 py-3 rounded-2xl bg-black/30 border border-white/10 hover:border-cyan-400/50 hover:text-cyan-300 transition">YOLOv8</span>
+            <span class="skill-badge px-5 py-3 rounded-2xl bg-black/30 border border-white/10 hover:border-cyan-400/50 hover:text-cyan-300 transition">PyTorch</span>
+            <span class="skill-badge px-5 py-3 rounded-2xl bg-black/30 border border-white/10 hover:border-cyan-400/50 hover:text-cyan-300 transition">TensorFlow</span>
+            <span class="skill-badge px-5 py-3 rounded-2xl bg-black/30 border border-white/10 hover:border-cyan-400/50 hover:text-cyan-300 transition">Power BI</span>
+            <span class="skill-badge px-5 py-3 rounded-2xl bg-black/30 border border-white/10 hover:border-cyan-400/50 hover:text-cyan-300 transition">SQL</span>
+            <span class="skill-badge px-5 py-3 rounded-2xl bg-black/30 border border-white/10 hover:border-cyan-400/50 hover:text-cyan-300 transition">Data Analysis</span>
+            <span class="skill-badge px-5 py-3 rounded-2xl bg-black/30 border border-white/10 hover:border-cyan-400/50 hover:text-cyan-300 transition">OpenCV</span>
+            <span class="skill-badge px-5 py-3 rounded-2xl bg-black/30 border border-white/10 hover:border-cyan-400/50 hover:text-cyan-300 transition">Scikit-learn</span>
+            <span class="skill-badge px-5 py-3 rounded-2xl bg-black/30 border border-white/10 hover:border-cyan-400/50 hover:text-cyan-300 transition">Pandas</span>
+            <span class="skill-badge px-5 py-3 rounded-2xl bg-black/30 border border-white/10 hover:border-cyan-400/50 hover:text-cyan-300 transition">Streamlit</span>
+            <span class="skill-badge px-5 py-3 rounded-2xl bg-black/30 border border-white/10 hover:border-cyan-400/50 hover:text-cyan-300 transition">Business Analysis</span>
           </div>
         </div>
-
-        <div class="project-card">
-          <div class="top-line"></div>
-
-          <div class="project-content">
-            <div class="project-category">
-              DEEP LEARNING
-            </div>
-
-            <h3>Fruit Classification</h3>
-
-            <p>
-              EfficientNet-based classification model with 97% accuracy deployed using Streamlit.
-            </p>
-
-            <div class="tags">
-              <div class="tag">CNN</div>
-              <div class="tag">EfficientNet</div>
-              <div class="tag">Streamlit</div>
-              <div class="tag">PyTorch</div>
-            </div>
-
-            <div class="project-buttons">
-              <a href="#">Live Demo</a>
-              <a href="#">GitHub</a>
-            </div>
-
-          </div>
-        </div>
-
-        <div class="project-card">
-          <div class="top-line"></div>
-
-          <div class="project-content">
-            <div class="project-category">
-              BUSINESS ANALYSIS
-            </div>
-
-            <h3>Amazon UK EDA</h3>
-
-            <p>
-              Analysis of 2.2M Amazon UK products dataset to uncover sales patterns and pricing insights.
-            </p>
-
-            <div class="tags">
-              <div class="tag">Pandas</div>
-              <div class="tag">Power BI</div>
-              <div class="tag">SQL</div>
-              <div class="tag">EDA</div>
-            </div>
-
-            <div class="project-buttons">
-              <a href="#">Live Demo</a>
-              <a href="#">GitHub</a>
-            </div>
-
-          </div>
-        </div>
-
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="skills" id="skills">
-    <div class="container">
-
-      <div class="skills-box">
-
-        <div class="section-title">
-          <p>EXPERTISE</p>
-          <h2>Technical Skills</h2>
+    <!-- Contact Section -->
+    <section id="contact" class="relative max-w-7xl mx-auto px-6 py-24">
+      <div class="text-center max-w-3xl mx-auto">
+        <p class="text-cyan-400 font-semibold mb-4">CONTACT</p>
+        <h2 class="text-5xl font-black mb-6">Let’s Build Something Powerful</h2>
+        <p class="text-zinc-400 text-lg leading-relaxed mb-10">
+          Open for internships, freelance opportunities, AI projects, data analytics work, and collaborations.
+        </p>
+        <div class="flex flex-wrap justify-center gap-5">
+          <button onclick="window.location.href='mailto:ahmed.hamed@example.com'" class="px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 font-semibold hover:scale-105 transition duration-300 shadow-2xl shadow-cyan-500/20 cursor-pointer">
+            Email Me
+          </button>
+          <button onclick="window.open('https://linkedin.com/in/', '_blank')" class="px-8 py-4 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition duration-200 cursor-pointer">
+            LinkedIn
+          </button>
+          <button onclick="window.open('https://github.com/', '_blank')" class="px-8 py-4 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition duration-200 cursor-pointer">
+            GitHub
+          </button>
         </div>
-
-        <div class="skills-list">
-          <div class="skill">Python</div>
-          <div class="skill">Machine Learning</div>
-          <div class="skill">Deep Learning</div>
-          <div class="skill">Computer Vision</div>
-          <div class="skill">NLP</div>
-          <div class="skill">YOLOv8</div>
-          <div class="skill">PyTorch</div>
-          <div class="skill">TensorFlow</div>
-          <div class="skill">Power BI</div>
-          <div class="skill">SQL</div>
-          <div class="skill">OpenCV</div>
-          <div class="skill">Pandas</div>
-          <div class="skill">Scikit-learn</div>
-          <div class="skill">Business Analysis</div>
-        </div>
-
       </div>
+    </section>
+  </main>
 
-    </div>
-  </section>
-
-  <footer id="contact">
-    <div class="container">
-      © 2026 Ahmed Hamed — AI Engineer & Data Scientist
-    </div>
+  <!-- Footer -->
+  <footer class="border-t border-white/10 py-8 text-center text-zinc-500 text-sm relative z-10">
+    © 2026 Ahmed Hamed — AI Engineer & Data Scientist
   </footer>
-
 </body>
 </html>
